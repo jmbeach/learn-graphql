@@ -12,7 +12,7 @@ function JobDetail() {
     })();
   }, [setJob, jobId]);
 
-  if (!job) return null;
+  if (!job) return <p>Loading...</p>;
   return (
     <div>
       <h1 className="title">{job.title}</h1>
