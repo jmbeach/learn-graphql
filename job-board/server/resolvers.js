@@ -7,6 +7,11 @@ export const resolvers = {
   },
   Mutation: {
     createJob: (_root, { job }) => Job.create(job),
+    deleteJob: async (_root, { id }) => {
+      await Job.delete(id)
+      return id;
+    },
+    updateJob: (_root, { job }) => Job.update(job)
   },
   Job: {
     company: (job) => Company.findById(job.companyId),
