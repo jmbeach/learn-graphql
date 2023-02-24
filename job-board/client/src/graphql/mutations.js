@@ -1,19 +1,14 @@
 import { gql, request } from "graphql-request";
+import { GRAPHQL_URL } from './queries'
 
 export async function createJob(job) {
-  const mutation = gql`
+  const query = gql`
     mutation CreateJobMutation($input: CreateJobInput!) {
-      createJob(job: $input) {
+      job: createJob(job: $input) {
         id
-        title
-        description
-        company {
-          id
-          name
-        }
       }
     }
   `;
-  const result = await request(mutation, { input: job });
+  const result = await request(GRAPHQL_URL, query, { input: job });
   return result.job;
 }
