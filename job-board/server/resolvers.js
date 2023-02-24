@@ -12,11 +12,24 @@ export const resolvers = {
       }
       return await Job.create({ ...job, companyId: user.companyId });
     },
-    deleteJob: async (_root, { id }) => {
+    deleteJob: async (_root, { id }, { user }) => {
+      const job = await Job.findById(id);
+      if (!user || job.companyId !== user.companyId) {
+        throw new Error("Unauthorized");
+      }
       await Job.delete(id);
       return id;
     },
-    updateJob: (_root, { job }) => Job.update(job),
+    updateJob: async (_root, { job }, { user }) => {
+      const match = await Job.findById(job.id);
+      if (
+        !user ||
+        match.companyId !== user.companyId
+      ) {
+        throw new Error("Unauthorized");
+      }
+      return await Job.update({...job, companyId: user.companyId});
+    },
   },
   Job: {
     company: (job) => Company.findById(job.companyId),
