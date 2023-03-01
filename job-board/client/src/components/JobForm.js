@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { createJob } from "../graphql/mutations";
 import {useNavigate} from 'react-router'
+import {createJob} from '../graphql/queries'
 
 function JobForm() {
   const [title, setTitle] = useState("");
